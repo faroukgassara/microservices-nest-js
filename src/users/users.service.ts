@@ -10,7 +10,7 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class UsersService {
 
-  constructor(@Inject('user-management') private readonly client: ClientProxy,@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
 
   async create(createUserDto: CreateUserDto):Promise<User> {
@@ -25,15 +25,15 @@ export class UsersService {
     return await this.userModel.findOne({email});
   }
 
-  async update(_id: string, updateUserDto: UpdateUserDto) {
+  async update(updateUserDto: UpdateUserDto) {
     const salt = await bcrypt.genSalt();
     const hashPassword = await bcrypt.hash(updateUserDto.password, salt);
     updateUserDto.password = hashPassword;
+    const _id =updateUserDto._id;
     return await this.userModel.updateOne({_id},{$set:{...updateUserDto}});
   }
 
-  async remove(pattern: string,email: string) {
-    this.client.send(pattern, email).toPromise();
+  async remove(email: string) {
     return await this.userModel.deleteOne({email});
   }
 
@@ -46,8 +46,7 @@ export class UsersService {
       const salt = await bcrypt.genSalt();
       const hashPassword = await bcrypt.hash(data.password, salt);
       data.password = hashPassword;
-      console.log(data)
-      const user = await this.create(data);
+      return await this.create(data);
     } catch (e) {
       throw new InternalServerErrorException(e);
     }

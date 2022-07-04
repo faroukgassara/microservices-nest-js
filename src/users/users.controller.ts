@@ -16,24 +16,56 @@ export class UsersController {
     return this.usersService.create(createUserDto);
   }
 
-  @Get()
-  findAll() {
+  @UseFilters(new AllExceptionsFilter())
+  @MessagePattern('user-findall')
+  public async findAll(
+    @Payload() data: any,
+    @Ctx() context: RmqContext
+  ) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    console.log('data', data);
+    channel.ack(orginalMessage);
     return this.usersService.findAll();
   }
 
-  @Get(':email')
-  findOne(@Param('email') email: string) {
-    return this.usersService.findOne(email);
+  @UseFilters(new AllExceptionsFilter())
+  @MessagePattern('user-findone')
+  public async findOne(
+    @Payload() data: any,
+    @Ctx() context: RmqContext
+  ) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    console.log('data', data);
+    channel.ack(orginalMessage);
+    return this.usersService.findOne(data);
   }
 
-  @Put(':_id')
-  update(@Param('_id') _id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(_id, updateUserDto);
+  @UseFilters(new AllExceptionsFilter())
+  @MessagePattern('user-update')
+  public async update(
+    @Payload() data: any,
+    @Ctx() context: RmqContext
+  ) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    console.log('data', data);
+    channel.ack(orginalMessage);
+    return this.usersService.update(data);
   }
 
-  @Delete(':email')
-  remove(@Param('email') email: string) {
-    return this.usersService.remove('user-management',email);
+  @UseFilters(new AllExceptionsFilter())
+  @MessagePattern('user-delete')
+  public async remove(
+    @Payload() data: any,
+    @Ctx() context: RmqContext
+  ) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    console.log('data', data);
+    channel.ack(orginalMessage);
+    return this.usersService.remove(data);
   }
 
   @UseFilters(new AllExceptionsFilter())

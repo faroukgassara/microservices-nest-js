@@ -5,11 +5,23 @@ import { AllExceptionsFilter } from './all-exception.filter';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { ForgotpasswordModule } from './forgotpassword/forgotpassword.module';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
-  imports: [UsersModule,MongooseModule.forRoot('mongodb://localhost/micro')],
+  imports: [MailerModule.forRoot({
+    transport:{
+      host:'',
+      auth:{
+        user:'',
+        pass:''
+      }
+    }
+
+  }),
+  UsersModule,MongooseModule.forRoot('mongodb://localhost/micro'), ForgotpasswordModule],
   controllers: [AppController],
   providers: [AppService
-  ],
+  ]
 })
 export class AppModule {}
