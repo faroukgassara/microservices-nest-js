@@ -23,6 +23,20 @@ export class ForgotpasswordController {
     return this.forgotpasswordService.forgot(data);
   }
 
+
+  @UseFilters(new AllExceptionsFilter())
+  @MessagePattern('reset-password')
+  public async resetpassword(
+    @Payload() data: any,
+    @Ctx() context: RmqContext
+  ) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    console.log('data', data);
+    channel.ack(orginalMessage);
+    return this.forgotpasswordService.resetpassword(data);
+  }
+
   @Get()
   findAll() {
     return this.forgotpasswordService.findAll();
