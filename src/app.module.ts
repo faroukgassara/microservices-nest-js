@@ -11,9 +11,10 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { ConfirmAccount, ConfirmAccountSchema } from './schemas/confirmaccount.schema';
+import { MailModule } from './mail/mail.module';
 
 @Module({
-  imports: [UsersModule,MongooseModule.forRoot('mongodb://localhost/micro'),MongooseModule.forFeature([{ name: ConfirmAccount.name, schema: ConfirmAccountSchema }]),ForgotpasswordModule],
+  imports: [UsersModule,MongooseModule.forRoot('mongodb://localhost/micro'),MongooseModule.forFeature([{ name: ConfirmAccount.name, schema: ConfirmAccountSchema }]),ForgotpasswordModule, MailModule],
   controllers: [AppController],
   providers: [AppService
   ]

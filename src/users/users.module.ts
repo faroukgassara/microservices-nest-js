@@ -5,11 +5,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/schemas/user.schema';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { ConfirmAccount, ConfirmAccountSchema } from 'src/schemas/confirmaccount.schema';
+import { MailService } from 'src/mail/mail.service';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: ConfirmAccount.name, schema: ConfirmAccountSchema }]),MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
   controllers: [UsersController],
-  providers: [UsersService],
+  providers: [UsersService,MailService],
   exports:[UsersService]
 })
 export class UsersModule {}

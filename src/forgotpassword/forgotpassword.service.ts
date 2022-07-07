@@ -6,15 +6,16 @@ import { User, UserDocument } from 'src/schemas/user.schema';
 import { CreateForgotpasswordDto } from './dto/create-forgotpassword.dto';
 import { UpdateForgotpasswordDto } from './dto/update-forgotpassword.dto';
 import * as bcrypt from 'bcrypt';
-import { MailerService } from '@nestjs-modules/mailer';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class ForgotpasswordService {
 
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>,@InjectModel(ForgotPassword.name) private forgotpasswordModel: Model<ForgotPasswordDocument>) {}
+  constructor(private mailService: MailService,@InjectModel(User.name) private userModel: Model<UserDocument>,@InjectModel(ForgotPassword.name) private forgotpasswordModel: Model<ForgotPasswordDocument>) {}
    
   // ***************** Add Forget password Request To The DataBase *****************
   async forgot(createForgotpasswordDto: any) {
+    await this.mailService.sendUserConfirmation("Reset your Password",createForgotpasswordDto.email,createForgotpasswordDto.token);
     return new this.forgotpasswordModel(createForgotpasswordDto).save();
   }
 

@@ -7,11 +7,12 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import { ConfirmAccount, ConfirmAccountDocument } from 'src/schemas/confirmaccount.schema';
+import { MailService } from 'src/mail/mail.service';
 
 @Injectable()
 export class UsersService {
 
-  constructor(@InjectModel(ConfirmAccount.name) private confirmaccountModel: Model<ConfirmAccountDocument>,@InjectModel(User.name) private userModel: Model<UserDocument>) {}
+  constructor(private mailService: MailService,@InjectModel(ConfirmAccount.name) private confirmaccountModel: Model<ConfirmAccountDocument>,@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
 
   // ***************** Add User To the DataBase *****************
@@ -69,6 +70,8 @@ export class UsersService {
       const token = crypto.randomBytes(10).toString('hex'); 
       const created_at = new Date().getTime();
       const confirmed_at = null;
+
+      await this.mailService.sendUserConfirmation("Confirm your Email",email,token);
 
       await this.confirmAccount({email,token,created_at,confirmed_at});
 
