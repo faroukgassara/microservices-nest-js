@@ -6,16 +6,19 @@ import { User, UserDocument } from 'src/schemas/user.schema';
 import { CreateForgotpasswordDto } from './dto/create-forgotpassword.dto';
 import { UpdateForgotpasswordDto } from './dto/update-forgotpassword.dto';
 import * as bcrypt from 'bcrypt';
+import { MailerService } from '@nestjs-modules/mailer';
 
 @Injectable()
 export class ForgotpasswordService {
 
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>,@InjectModel(ForgotPassword.name) private forgotpasswordModel: Model<ForgotPasswordDocument>) {}
-  
-  async forgot(createForgotpasswordDto: any):Promise<ForgotPassword> {
-    return await new this.forgotpasswordModel(createForgotpasswordDto).save();
+   
+  // ***************** Add Forget password Request To The DataBase *****************
+  async forgot(createForgotpasswordDto: any) {
+    return new this.forgotpasswordModel(createForgotpasswordDto).save();
   }
 
+  // ***************** Reset Password *****************
   async resetpassword(createForgotpasswordDto: any) {
     const forget = await this.forgotpasswordModel.findOne({token:createForgotpasswordDto.token});
 
@@ -33,19 +36,4 @@ export class ForgotpasswordService {
     await this.forgotpasswordModel.updateOne(	{token : createForgotpasswordDto.token},{$set :{"confirmed_at" : confirmed_at,}})
   }
 
-  findAll() {
-    return `This action returns all forgotpassword`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} forgotpassword`;
-  }
-
-  update(id: number, updateForgotpasswordDto: UpdateForgotpasswordDto) {
-    return `This action updates a #${id} forgotpassword`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} forgotpassword`;
-  }
 }

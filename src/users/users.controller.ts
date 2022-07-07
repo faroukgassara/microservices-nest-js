@@ -11,11 +11,7 @@ import { Ctx, MessagePattern, Payload, RmqContext } from '@nestjs/microservices'
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
-  }
-
+  // ***************** Get All Users *****************
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('user-findall')
   public async findAll(
@@ -29,6 +25,7 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
+  // ***************** Get One User *****************
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('user-findone')
   public async findOne(
@@ -42,6 +39,7 @@ export class UsersController {
     return this.usersService.findOne(data);
   }
 
+  // ***************** Update User *****************
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('user-update')
   public async update(
@@ -55,6 +53,7 @@ export class UsersController {
     return this.usersService.update(data);
   }
 
+  // ***************** Delete User *****************
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('user-delete')
   public async remove(
@@ -68,6 +67,7 @@ export class UsersController {
     return this.usersService.remove(data);
   }
 
+  // ***************** Sign Up *****************
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('user-management')
   public async signup(
@@ -79,5 +79,20 @@ export class UsersController {
     console.log('data', data);
     channel.ack(orginalMessage);
     return this.usersService.signup(data);
+  }
+
+
+  // ***************** Confirm Email After Register *****************
+  @UseFilters(new AllExceptionsFilter())
+  @MessagePattern('confirm-findall')
+  public async confirmaccount(
+    @Payload() data: any,
+    @Ctx() context: RmqContext
+  ) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    console.log('data', data);
+    channel.ack(orginalMessage);
+    return this.usersService.confirmaccount(data);
   }
 }

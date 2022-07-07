@@ -10,6 +10,7 @@ export class ForgotpasswordController {
   constructor(private readonly forgotpasswordService: ForgotpasswordService) {}
 
 
+  // ***************** Add Forget password Request To The DataBase *****************
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('forgot-password')
   public async forgot(
@@ -23,7 +24,7 @@ export class ForgotpasswordController {
     return this.forgotpasswordService.forgot(data);
   }
 
-
+  // ***************** Reset Password *****************
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('reset-password')
   public async resetpassword(
@@ -37,23 +38,4 @@ export class ForgotpasswordController {
     return this.forgotpasswordService.resetpassword(data);
   }
 
-  @Get()
-  findAll() {
-    return this.forgotpasswordService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.forgotpasswordService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateForgotpasswordDto: UpdateForgotpasswordDto) {
-    return this.forgotpasswordService.update(+id, updateForgotpasswordDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.forgotpasswordService.remove(+id);
-  }
 }
