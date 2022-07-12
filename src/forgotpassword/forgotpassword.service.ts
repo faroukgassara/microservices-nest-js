@@ -15,8 +15,8 @@ export class ForgotpasswordService {
    
   // ***************** Add Forget password Request To The DataBase *****************
   async forgot(createForgotpasswordDto: any) {
-    await this.mailService.sendUserConfirmation("Reset your Password",createForgotpasswordDto.email,createForgotpasswordDto.token);
-    return new this.forgotpasswordModel(createForgotpasswordDto).save();
+    await this.mailService.sendresetpassword("Reset your Password",createForgotpasswordDto.email,createForgotpasswordDto.token);
+    return await new this.forgotpasswordModel(createForgotpasswordDto).save();
   }
 
   // ***************** Reset Password *****************
