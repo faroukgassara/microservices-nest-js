@@ -1,6 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
 import { CreateUserDto } from './create-user.dto';
-import { Role } from 'src/schemas/role.enum';
 import { IsAlpha, IsAlphanumeric, IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsNumber, IsOptional, Length, Max, Min } from 'class-validator';
 import { Exclude } from 'class-transformer';
 export class UpdateUserDto extends PartialType(CreateUserDto) {
@@ -21,9 +20,6 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 
     @IsAlpha()
     lastname: string;
-
-    @IsEnum(Role)
-    readonly role: Role;
     
     @IsNumber()
     age: number;

@@ -7,14 +7,21 @@ import { CreateForgotpasswordDto } from './dto/create-forgotpassword.dto';
 import { UpdateForgotpasswordDto } from './dto/update-forgotpassword.dto';
 import * as bcrypt from 'bcrypt';
 import { MailService } from 'src/mail/mail.service';
+import { UsersService } from 'src/users/users.service';
 
 @Injectable()
 export class ForgotpasswordService {
 
-  constructor(private mailService: MailService,@InjectModel(User.name) private userModel: Model<UserDocument>,@InjectModel(ForgotPassword.name) private forgotpasswordModel: Model<ForgotPasswordDocument>) {}
+  constructor(private readonly usersService: UsersService,private mailService: MailService,@InjectModel(User.name) private userModel: Model<UserDocument>,@InjectModel(ForgotPassword.name) private forgotpasswordModel: Model<ForgotPasswordDocument>) {}
    
   // ***************** Add Forget password Request To The DataBase *****************
   async forgot(createForgotpasswordDto: any) {
+    const checkUser = await this.usersService.findOne(createForgotpasswordDto.email);
+
+    if (!checkUser) {
+      throw new HttpException('USER_DONT_EXISTS', HttpStatus.CONFLICT);
+    }
+
     await this.mailService.sendresetpassword("Reset your Password",createForgotpasswordDto.email,createForgotpasswordDto.token);
     return await new this.forgotpasswordModel(createForgotpasswordDto).save();
   }

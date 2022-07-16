@@ -5,10 +5,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ForgotPassword, ForgotPasswordSchema } from 'src/schemas/forgotpassword.schema';
 import { User, UserSchema } from 'src/schemas/user.schema';
 import { MailService } from 'src/mail/mail.service';
+import { UsersService } from 'src/users/users.service';
+import { ConfirmAccount, ConfirmAccountSchema } from 'src/schemas/confirmaccount.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),MongooseModule.forFeature([{ name: ForgotPassword.name, schema: ForgotPasswordSchema }])],
+  imports: [MongooseModule.forFeature([{ name: ConfirmAccount.name, schema: ConfirmAccountSchema }]),MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),MongooseModule.forFeature([{ name: ForgotPassword.name, schema: ForgotPasswordSchema }])],
   controllers: [ForgotpasswordController],
-  providers: [ForgotpasswordService,MailService]
+  providers: [UsersService,ForgotpasswordService,MailService]
 })
 export class ForgotpasswordModule {}

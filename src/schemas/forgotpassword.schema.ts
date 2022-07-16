@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import {  Document } from 'mongoose';
-import { Role } from './role.enum';
 
 export type ForgotPasswordDocument = ForgotPassword & Document;
 

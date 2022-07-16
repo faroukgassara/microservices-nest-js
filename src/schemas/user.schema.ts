@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { Role } from './role.enum';
+import mongoose, { Document } from 'mongoose';
+import { Applications } from './applications.schema';
 
 export type UserDocument = User & Document;
 
@@ -22,9 +22,6 @@ export class User {
   age: number;
 
   @Prop()
-  role: Role;
-
-  @Prop()
   locked : boolean;
 
   @Prop()
@@ -41,6 +38,9 @@ export class User {
 
   @Prop()
   phone : string;
+
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: Applications.name, required: true })
+  applications: Applications;
 
 }
 

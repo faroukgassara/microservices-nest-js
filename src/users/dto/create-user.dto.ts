@@ -1,5 +1,5 @@
-import { IsAlpha, IsAlphanumeric, IsBoolean, IsEmail, IsEmpty, IsEnum, IsNotEmpty, IsNumber, IsOptional, Length, Max, Min } from 'class-validator';
-import { Role } from 'src/schemas/role.enum';
+import { IsAlpha, IsAlphanumeric, IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsNumber, Length, Max, Min } from 'class-validator';
+
 
 export class CreateUserDto {
     
@@ -15,10 +15,6 @@ export class CreateUserDto {
 
     @IsAlpha()
     lastname: string;
-
-    @IsEnum(Role)
-    readonly role: Role;
-
     
     @IsNumber()
     age: number;
@@ -30,10 +26,10 @@ export class CreateUserDto {
     @IsNumber()
     cin : string;
 
-    @IsEmpty()
+    @IsBoolean()
     locked : boolean;
   
-    @IsEmpty()
+    @IsBoolean()
     enabled : boolean;
 
     @IsNotEmpty()
