@@ -25,7 +25,7 @@ export class ApplicationsController {
 
   @MessagePattern('updateApplication')
   update(@Payload() updateApplicationDto: UpdateApplicationDto) {
-    return this.applicationsService.update(updateApplicationDto.id, updateApplicationDto);
+    return this.applicationsService.update(updateApplicationDto);
   }
 
   @MessagePattern('removeApplication')

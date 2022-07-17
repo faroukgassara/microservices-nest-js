@@ -7,16 +7,16 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ForgotpasswordModule } from './forgotpassword/forgotpassword.module';
 import { MailerModule } from '@nestjs-modules/mailer';
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { join } from 'path';
 import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { ConfirmAccount, ConfirmAccountSchema } from './schemas/confirmaccount.schema';
 import { MailModule } from './mail/mail.module';
 import { ApplicationsModule } from './applications/applications.module';
 import { RolesModule } from './roles/roles.module';
+import { AffectationModule } from './affectation/affectation.module';
 
 @Module({
-  imports: [UsersModule,MongooseModule.forRoot('mongodb://localhost/micro'),MongooseModule.forFeature([{ name: ConfirmAccount.name, schema: ConfirmAccountSchema }]),ForgotpasswordModule, MailModule, ApplicationsModule, RolesModule],
+  imports: [UsersModule,MongooseModule.forRoot('mongodb://localhost/micro'),MongooseModule.forFeature([{ name: ConfirmAccount.name, schema: ConfirmAccountSchema }]),ForgotpasswordModule, MailModule, ApplicationsModule, RolesModule, AffectationModule],
   controllers: [AppController],
   providers: [AppService
   ]

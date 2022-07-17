@@ -49,14 +49,21 @@ export class UsersService {
     return await this.userModel.deleteOne({email});
   }
 
+  // ***************** Affect Role To User *****************
+  async updatepush(_id: string,_idRole: string) {
+    return this.userModel.updateOne({_id}, {
+      $set: { roles: _idRole },
+    })
+  }
+
   // ***************** Sign Up *****************
   async signup(data: CreateUserDto) {
     try {
-      const checkUser = await this.findOne(data.email);
+      //const checkUser = await this.findOne(data.email);
 
-      if (checkUser) {
-        throw new HttpException('USER_EXISTS', HttpStatus.CONFLICT);
-      }
+      //if (checkUser) {
+      //  throw new HttpException('USER_EXISTS', HttpStatus.CONFLICT);
+      //}
 
       const salt = await bcrypt.genSalt();
       const hashPassword = await bcrypt.hash(data.password, salt);
@@ -71,7 +78,7 @@ export class UsersService {
       const created_at = new Date().getTime();
       const confirmed_at = null;
 
-      await this.mailService.sendUserConfirmation("Confirm your Email",email,token);
+      //await this.mailService.sendUserConfirmation("Confirm your Email",email,token);
 
       await this.confirmAccount({email,token,created_at,confirmed_at});
 

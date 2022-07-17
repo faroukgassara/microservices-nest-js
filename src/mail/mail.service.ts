@@ -9,7 +9,7 @@ export class MailService {
     const url = `http://localhost:3001/emailconfirmation/`+user+`/`+token;
 
     await this.mailerService.sendMail({
-      to: user,
+      to: 'farouk.gassara@esprit.tn',
       subject: 'Welcome to Nice App! ' + subject,
       context: { 
         name: user+token,

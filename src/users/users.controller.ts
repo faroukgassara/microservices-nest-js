@@ -95,4 +95,18 @@ export class UsersController {
     channel.ack(orginalMessage);
     return this.usersService.confirmaccount(data);
   }
+
+    // ***************** Affect Role To User *****************
+    @UseFilters(new AllExceptionsFilter())
+    @MessagePattern('user-AffectRoleToUser')
+    public async updatepush(
+      @Payload() data: any,
+      @Ctx() context: RmqContext
+    ) {
+      const channel = context.getChannelRef();
+      const orginalMessage = context.getMessage();
+      console.log('data', data);
+      channel.ack(orginalMessage);
+      return this.usersService.updatepush(data._id,data._idRole);
+    }
 }

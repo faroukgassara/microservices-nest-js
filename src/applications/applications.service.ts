@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Applications, ApplicationsDocument } from 'src/schemas/applications.schema';
 import { CreateApplicationDto } from './dto/create-application.dto';
 import { UpdateApplicationDto } from './dto/update-application.dto';
 
 @Injectable()
 export class ApplicationsService {
-  create(createApplicationDto: CreateApplicationDto) {
-    return 'This action adds a new application';
+  
+  constructor(@InjectModel(Applications.name) private applicatioModel: Model<ApplicationsDocument>) {}
+
+  async create(createApplicationDto: CreateApplicationDto) {
+    return await new this.applicatioModel(createApplicationDto).save();
   }
 
-  findAll() {
-    return `This action returns all applications`;
+  async findAll() {
+    return await this.applicatioModel.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} application`;
+  async findOne(id: number):Promise<Applications | undefined> {
+    return await this.applicatioModel.findOne({id});
   }
 
-  update(id: number, updateApplicationDto: UpdateApplicationDto) {
-    return `This action updates a #${id} application`;
+  async update(updateApplicationDto: UpdateApplicationDto) {
+    const _id =updateApplicationDto._id;
+    return await this.applicatioModel.updateOne({_id},{$set:{...updateApplicationDto}});
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} application`;
+  async remove(id: number) {
+    return await this.applicatioModel.deleteOne({id});
   }
 }
