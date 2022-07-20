@@ -13,7 +13,7 @@ export class  Affectation {
   @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: Roles.name, required: true })
   roles: Roles;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: User.name, required: true })
+  @Prop({ type: User, ref: User.name, required: true })
   users: User;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Applications.name, required: true })

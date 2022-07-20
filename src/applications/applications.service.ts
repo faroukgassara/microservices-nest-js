@@ -19,7 +19,7 @@ export class ApplicationsService {
   }
 
   async findOne(id: number):Promise<Applications | undefined> {
-    return await this.applicatioModel.findOne({id});
+    return await this.applicatioModel.findOne({_id:id});
   }
 
   async update(updateApplicationDto: UpdateApplicationDto) {

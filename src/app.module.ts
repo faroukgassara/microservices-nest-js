@@ -14,11 +14,15 @@ import { MailModule } from './mail/mail.module';
 import { ApplicationsModule } from './applications/applications.module';
 import { RolesModule } from './roles/roles.module';
 import { AffectationModule } from './affectation/affectation.module';
+import { AffectationService } from './affectation/affectation.service';
+import { Affectation, AffectationSchema } from './schemas/affectation.schema';
+import { ApplicationsService } from './applications/applications.service';
+import { Applications, ApplicationsSchema } from './schemas/applications.schema';
 
 @Module({
-  imports: [UsersModule,MongooseModule.forRoot('mongodb://localhost/micro'),MongooseModule.forFeature([{ name: ConfirmAccount.name, schema: ConfirmAccountSchema }]),ForgotpasswordModule, MailModule, ApplicationsModule, RolesModule, AffectationModule],
+  imports: [MongooseModule.forFeature([{ name: Applications.name, schema: ApplicationsSchema }]),UsersModule,MongooseModule.forRoot('mongodb://localhost/micro'),MongooseModule.forFeature([{ name: Affectation.name, schema: AffectationSchema }]),MongooseModule.forFeature([{ name: ConfirmAccount.name, schema: ConfirmAccountSchema }]),ForgotpasswordModule, MailModule, ApplicationsModule, RolesModule, AffectationModule],
   controllers: [AppController],
-  providers: [AppService
+  providers: [AppService,AffectationModule,AffectationService,ApplicationsService,ApplicationsModule
   ]
 })
 export class AppModule {}

@@ -12,7 +12,7 @@ export class AppController {
   
   // ***************** Sign In *****************
   @MessagePattern('sign-in')
-  public async executee(
+  public async signin(
     @Payload() data: any,
     @Ctx() context: RmqContext
   ) {
@@ -20,6 +20,7 @@ export class AppController {
     const orginalMessage = context.getMessage();
     console.log('data', data);
     channel.ack(orginalMessage);
+    return this.appService.signin(data);
   }
 
 }

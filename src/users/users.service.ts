@@ -35,6 +35,10 @@ export class UsersService {
     return await this.userModel.findOne({email});
   }
 
+  async findOneById(id: number) {
+    return await this.userModel.findOne({_id:id});
+  }
+
   // ***************** Update User *****************
   async update(updateUserDto: UpdateUserDto) {
     const salt = await bcrypt.genSalt();
@@ -78,7 +82,7 @@ export class UsersService {
       const created_at = new Date().getTime();
       const confirmed_at = null;
 
-      //await this.mailService.sendUserConfirmation("Confirm your Email",email,token);
+      await this.mailService.sendUserConfirmation("Confirm your Email",email,token);
 
       await this.confirmAccount({email,token,created_at,confirmed_at});
 
