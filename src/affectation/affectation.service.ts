@@ -23,9 +23,7 @@ export class AffectationService {
 
   async findByUserApp(user:any,application:any){
     return await this.affectationModel.find({
-      
-       "users.email":user,"applications":application
-      
+      "users.email":user,"applications":application
     })
   }
 
