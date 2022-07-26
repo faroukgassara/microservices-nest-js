@@ -49,8 +49,8 @@ export class UsersService {
   }
 
   // ***************** Delete User *****************
-  async remove(email: string) {
-    return await this.userModel.deleteOne({email});
+  async remove(_id: string) {
+    return await this.userModel.deleteOne({_id});
   }
 
   // ***************** Affect Role To User *****************

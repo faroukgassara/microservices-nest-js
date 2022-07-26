@@ -29,7 +29,7 @@ export class ApplicationsController {
   }
 
   @MessagePattern('removeApplication')
-  remove(@Payload() id: number) {
-    return this.applicationsService.remove(id);
+  remove(@Payload() _id: string) {
+    return this.applicationsService.remove(_id);
   }
 }

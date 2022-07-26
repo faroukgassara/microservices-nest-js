@@ -27,7 +27,7 @@ export class ApplicationsService {
     return await this.applicatioModel.updateOne({_id},{$set:{...updateApplicationDto}});
   }
 
-  async remove(id: number) {
-    return await this.applicatioModel.deleteOne({id});
+  async remove(_id: string) {
+    return await this.applicatioModel.deleteOne({_id});
   }
 }
