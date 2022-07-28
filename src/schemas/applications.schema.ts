@@ -7,10 +7,10 @@ export type ApplicationsDocument = Applications & Document;
 
 @Schema()
 export class Applications {
-  @Prop()
+  @Prop({required: true,unique:true})
   url: string;
 
-  @Prop()
+  @Prop({required: true,unique:true})
   name: string;
 
   @Prop()

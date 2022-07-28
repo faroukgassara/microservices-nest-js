@@ -30,4 +30,11 @@ export class ApplicationsService {
   async remove(_id: string) {
     return await this.applicatioModel.deleteOne({_id});
   }
+
+    // ***************** Affect Role To App *****************
+    async updatepush(_id: string,_idRole: string) {
+      return this.applicatioModel.updateOne({_id}, {
+        $set: { roles: _idRole },
+      })
+    }
 }
