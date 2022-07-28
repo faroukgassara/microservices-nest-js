@@ -41,9 +41,6 @@ export class UsersService {
 
   // ***************** Update User *****************
   async update(updateUserDto: UpdateUserDto) {
-    const salt = await bcrypt.genSalt();
-    const hashPassword = await bcrypt.hash(updateUserDto.password, salt);
-    updateUserDto.password = hashPassword;
     const _id =updateUserDto._id;
     return await this.userModel.updateOne({_id},{$set:{...updateUserDto}});
   }
@@ -73,8 +70,6 @@ export class UsersService {
       const hashPassword = await bcrypt.hash(data.password, salt);
 
       data.password = hashPassword;
-      data.enabled=false;
-      data.locked=false;
 
       const email = data.email;
       const crypto = require('crypto');
