@@ -52,6 +52,20 @@ export class ApplicationsController {
     channel.ack(orginalMessage);
     return this.applicationsService.updatepush(data._id, data._idRole);
   }
+
+    // ***************** Affect Role To App *****************
+    @UseFilters(new AllExceptionsFilter())
+    @MessagePattern('app-DeleteRoleFromApp')
+    public async updatepull(
+      @Payload() data: any,
+      @Ctx() context: RmqContext
+    ) {
+      const channel = context.getChannelRef();
+      const orginalMessage = context.getMessage();
+      console.log('data', data);
+      channel.ack(orginalMessage);
+      return this.applicationsService.updatepull(data._id, data._idRole);
+    }
 }
 
 

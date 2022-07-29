@@ -2,8 +2,8 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import {  Document } from 'mongoose';
 
 export type RolesDocument = Roles & Document;
-
-@Schema()
+const opts = { toJSON: { virtuals: true } };
+@Schema(opts)
 export class Roles {
     
   @Prop()

@@ -1,11 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, {  Document } from 'mongoose';
+import * as mongoose from 'mongoose';
 import { Roles } from './roles.schema';
-import { User } from './user.schema';
 
 export type ApplicationsDocument = Applications & Document;
-
-@Schema()
+const opts = { toJSON: { virtuals: true } };
+@Schema(opts)
 export class Applications {
   @Prop({required: true,unique:true})
   url: string;
@@ -16,8 +15,8 @@ export class Applications {
   @Prop()
   isDeleted: boolean;
 
-  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: Roles.name, required: true })
-  roles: Roles;
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: Roles.name })
+  roles:[mongoose.Schema.Types.ObjectId];
 }
 
 export const ApplicationsSchema = SchemaFactory.createForClass(Applications);
