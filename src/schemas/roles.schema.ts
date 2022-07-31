@@ -6,7 +6,7 @@ const opts = { toJSON: { virtuals: true } };
 @Schema(opts)
 export class Roles {
     
-  @Prop()
+  @Prop({required: true,unique:true})
   name: string;
 
 }

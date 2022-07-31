@@ -23,4 +23,4 @@ export class  Affectation {
 
 
 export const  AffectationSchema = SchemaFactory.createForClass( Affectation);
-AffectationSchema.index({ "users": 1, "applications": 1}, { "unique": true });
+AffectationSchema.index({ users: 1, applications: 1}, { unique: true });

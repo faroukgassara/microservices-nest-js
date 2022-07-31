@@ -10,9 +10,9 @@ export class MailService {
 
     await this.mailerService.sendMail({
       to: 'farouk.gassara@esprit.tn',
-      subject: 'Welcome to Nice App! ' + subject,
+      subject: 'Welcome ! ' + subject,
       context: { 
-        name: user+token,
+        name: user,
         url,
       },
       template: './confirmation',
@@ -23,10 +23,10 @@ export class MailService {
     const url = `http://localhost:3001/resetpassword/`+user+`/`+token;
 
     await this.mailerService.sendMail({
-      to: user,
-      subject: 'Welcome to Nice App! ' + subject,
+      to: 'farouk.gassara@esprit.tn',
+      subject: 'Welcome! ' + subject,
       context: { 
-        name: user+token,
+        name: user,
         url,
       },
       template: './confirmation',

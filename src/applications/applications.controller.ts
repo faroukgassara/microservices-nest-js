@@ -11,32 +11,32 @@ export class ApplicationsController {
 
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('createApplication')
-  create(@Payload() createApplicationDto: CreateApplicationDto) {
-    return this.applicationsService.create(createApplicationDto);
+  public async create(@Payload() createApplicationDto: CreateApplicationDto) {
+    return await this.applicationsService.create(createApplicationDto);
   }
 
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('findAllApplications')
-  findAll() {
-    return this.applicationsService.findAll();
+  public async findAll() {
+    return await this.applicationsService.findAll();
   }
 
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('findOneApplication')
-  findOne(@Payload() id: number) {
-    return this.applicationsService.findOne(id);
+  public async findOne(@Payload() id: number) {
+    return await this.applicationsService.findOne(id);
   }
 
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('updateApplication')
-  update(@Payload() updateApplicationDto: UpdateApplicationDto) {
-    return this.applicationsService.update(updateApplicationDto);
+  public async update(@Payload() updateApplicationDto: UpdateApplicationDto) {
+    return await this.applicationsService.update(updateApplicationDto);
   }
 
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('removeApplication')
-  remove(@Payload() _id: string) {
-    return this.applicationsService.remove(_id);
+  public async remove(@Payload() _id: string) {
+    return await this.applicationsService.remove(_id);
   }
 
   // ***************** Affect Role To User *****************
@@ -50,7 +50,7 @@ export class ApplicationsController {
     const orginalMessage = context.getMessage();
     console.log('data', data);
     channel.ack(orginalMessage);
-    return this.applicationsService.updatepush(data._id, data._idRole);
+    return await this.applicationsService.updatepush(data._id, data._idRole);
   }
 
     // ***************** Affect Role To App *****************
@@ -64,7 +64,7 @@ export class ApplicationsController {
       const orginalMessage = context.getMessage();
       console.log('data', data);
       channel.ack(orginalMessage);
-      return this.applicationsService.updatepull(data._id, data._idRole);
+      return await this.applicationsService.updatepull(data._id, data._idRole);
     }
 }
 
