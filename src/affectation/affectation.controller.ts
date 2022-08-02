@@ -32,4 +32,9 @@ export class AffectationController {
   remove(@Payload() id: number) {
     return this.affectationService.remove(id);
   }
+
+  @MessagePattern('findByUserEmail')
+  findByUserEmail(@Payload() email: string) {
+    return this.affectationService.findByUserEmail(email);
+  }
 }
