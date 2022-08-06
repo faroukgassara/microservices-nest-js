@@ -7,7 +7,7 @@ import { AllExceptionsFilter } from 'src/all-exception.filter';
 
 @Controller()
 export class RolesController {
-  constructor(private readonly rolesService: RolesService) {}
+  constructor(private readonly rolesService: RolesService) { }
 
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('createRole')
@@ -17,32 +17,47 @@ export class RolesController {
   ) {
     const channel = context.getChannelRef();
     const orginalMessage = context.getMessage();
-    console.log('data', data);
     channel.ack(orginalMessage);
     return this.rolesService.create(data);
   }
 
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('findAllRoles')
-  findAll() {
+  findAll(@Payload() id: number,
+    @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    channel.ack(orginalMessage);
     return this.rolesService.findAll();
   }
 
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('findOneRole')
-  findOne(@Payload() id: number) {
+  findOne(@Payload() id: number,
+    @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    channel.ack(orginalMessage);
     return this.rolesService.findOne(id);
   }
 
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('updateRole')
-  update(@Payload() updateRoleDto: UpdateRoleDto) {
+  update(@Payload() updateRoleDto: UpdateRoleDto,
+    @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    channel.ack(orginalMessage);
     return this.rolesService.update(updateRoleDto);
   }
 
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('removeRole')
-  remove(@Payload() id: number) {
-    return this.rolesService.remove(id);
+  remove(@Payload() _id: string,
+    @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    channel.ack(orginalMessage);
+    return this.rolesService.remove(_id);
   }
 }

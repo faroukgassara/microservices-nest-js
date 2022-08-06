@@ -25,12 +25,14 @@ export class RolesService {
     return await this.roleModel.findOne({id});
   }
 
+  // ***************** Update Role *****************
   async update(updateRoleDto: UpdateRoleDto) {
     const _id =updateRoleDto._id;
     return await this.roleModel.updateOne({_id},{$set:{...updateRoleDto}});
   }
 
-  async remove(id: number) {
-    return await this.roleModel.deleteOne({id});
+  // ***************** Delete Role *****************
+  async remove(_id: string) {
+    return await this.roleModel.deleteOne({_id});
   }
 }

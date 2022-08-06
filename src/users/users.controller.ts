@@ -20,7 +20,6 @@ export class UsersController {
   ) {
     const channel = context.getChannelRef();
     const orginalMessage = context.getMessage();
-    console.log('data', data);
     channel.ack(orginalMessage);
     return this.usersService.findAll();
   }
@@ -34,7 +33,6 @@ export class UsersController {
   ) {
     const channel = context.getChannelRef();
     const orginalMessage = context.getMessage();
-    console.log('data', data);
     channel.ack(orginalMessage);
     return this.usersService.findOne(data);
   }
@@ -48,7 +46,6 @@ export class UsersController {
   ) {
     const channel = context.getChannelRef();
     const orginalMessage = context.getMessage();
-    console.log('data', data);
     channel.ack(orginalMessage);
     return this.usersService.update(data);
   }
@@ -62,7 +59,6 @@ export class UsersController {
   ) {
     const channel = context.getChannelRef();
     const orginalMessage = context.getMessage();
-    console.log('data', data);
     channel.ack(orginalMessage);
     return this.usersService.remove(data);
   }
@@ -76,7 +72,6 @@ export class UsersController {
   ) {
     const channel = context.getChannelRef();
     const orginalMessage = context.getMessage();
-    console.log('data', data);
     channel.ack(orginalMessage);
     return this.usersService.signup(data);
   }
@@ -91,7 +86,6 @@ export class UsersController {
   ) {
     const channel = context.getChannelRef();
     const orginalMessage = context.getMessage();
-    console.log('data', data);
     channel.ack(orginalMessage);
     return this.usersService.confirmaccount(data);
   }
@@ -105,7 +99,6 @@ export class UsersController {
     ) {
       const channel = context.getChannelRef();
       const orginalMessage = context.getMessage();
-      console.log('data', data);
       channel.ack(orginalMessage);
       return this.usersService.updatepush(data._id,data._idRole);
     }

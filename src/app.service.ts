@@ -16,8 +16,8 @@ export class AppService {
     return 'Hello World!';
   }
 
+  // ***************** Sign In With One Of The Applications*****************
   async signin(data:any){
-
 
     const application = await this.applicationsservice.findOne(data.application);
 

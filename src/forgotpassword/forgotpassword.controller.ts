@@ -19,7 +19,6 @@ export class ForgotpasswordController {
   ) {
     const channel = context.getChannelRef();
     const orginalMessage = context.getMessage();
-    console.log('data', data);
     channel.ack(orginalMessage);
     return this.forgotpasswordService.forgot(data);
   }
@@ -33,7 +32,6 @@ export class ForgotpasswordController {
   ) {
     const channel = context.getChannelRef();
     const orginalMessage = context.getMessage();
-    console.log('data', data);
     channel.ack(orginalMessage);
     return this.forgotpasswordService.resetpassword(data);
   }

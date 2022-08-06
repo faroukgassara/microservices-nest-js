@@ -9,16 +9,17 @@ import { UpdateAffectationDto } from './dto/update-affectation.dto';
 @Injectable()
 export class AffectationService {
 
-  constructor(private userService:UsersService,@InjectModel(Affectation.name) private affectationModel: Model<AffectationDocument>) {}
+  constructor(private userService: UsersService, @InjectModel(Affectation.name) private affectationModel: Model<AffectationDocument>) { }
 
+  // ***************** AFFECT APPLICATION TO USER (SIGN UP IN THE APPLICATION) *****************
   async create(createAffectationDto: any) {
-    
+
     const user = await this.userService.findOneById(createAffectationDto.users)
-    createAffectationDto.users=user;
-    
-    const res = await this.findByUserApp(user.email,createAffectationDto.applications)
+    createAffectationDto.users = user;
+
+    const res = await this.findByUserApp(user.email, createAffectationDto.applications)
     console.log(res);
-    if(res.length >0){
+    if (res.length > 0) {
       throw new UnauthorizedException();
     }
 
@@ -29,27 +30,32 @@ export class AffectationService {
     return await this.affectationModel.find().populate("applications").populate("users");
   }
 
-  async findByUserEmail(email:string){
+  // ***************** FIND AFFECTATION BY USER EMAIL*****************
+  async findByUserEmail(email: string) {
     return await this.affectationModel.find({
-      "users.email":email
+      "users.email": email
     }).populate("applications")
   }
 
-  async findByUserApp(user:any,application:any){
+  // ***************** FIND AFFECTATION BY USER EMAIL AND APPLICATION ID *****************
+  async findByUserApp(user: any, application: any) {
     return await this.affectationModel.find({
-      "users.email":user,"applications":application
+      "users.email": user, "applications": application
     })
   }
 
+  // ***************** findOne AFFECTATION *****************
   async findOne(id: number) {
-    return await this.affectationModel.findOne({id});
+    return await this.affectationModel.findOne({ id });
   }
 
+  // ***************** update AFFECTATION *****************
   update(id: number, updateAffectationDto: UpdateAffectationDto) {
     return `This action updates a #${id} affectation`;
   }
 
+  // ***************** DELETE AFFECTATION *****************
   async remove(id: number) {
-    return await this.affectationModel.deleteOne({id});
+    return await this.affectationModel.deleteOne({ id });
   }
 }

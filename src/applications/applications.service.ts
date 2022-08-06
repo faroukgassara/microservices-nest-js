@@ -10,23 +10,28 @@ export class ApplicationsService {
 
   constructor(@InjectModel(Applications.name) private applicatioModel: Model<ApplicationsDocument>) { }
 
+  // ***************** create App *****************
   async create(createApplicationDto: CreateApplicationDto) {
     return await new this.applicatioModel(createApplicationDto).save();
   }
 
+  // ***************** findAll App *****************
   async findAll() {
     return await this.applicatioModel.find().populate("roles");
   }
 
+  // ***************** findOne App *****************
   async findOne(id: number): Promise<Applications | undefined> {
     return await this.applicatioModel.findOne({ _id: id }).populate("roles");
   }
 
+  // ***************** update App *****************
   async update(updateApplicationDto: UpdateApplicationDto) {
     const _id = updateApplicationDto._id;
     return await this.applicatioModel.updateOne({ _id }, { $set: { ...updateApplicationDto } });
   }
 
+  // ***************** DELETE App *****************
   async remove(_id: string) {
     return await this.applicatioModel.deleteOne({ _id });
   }

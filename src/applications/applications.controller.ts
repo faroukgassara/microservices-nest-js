@@ -9,33 +9,58 @@ import { UpdateApplicationDto } from './dto/update-application.dto';
 export class ApplicationsController {
   constructor(private readonly applicationsService: ApplicationsService) { }
 
+  // ***************** create App *****************
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('createApplication')
-  public async create(@Payload() createApplicationDto: CreateApplicationDto) {
+  public async create(@Payload() createApplicationDto: CreateApplicationDto,
+    @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    channel.ack(orginalMessage);
     return await this.applicationsService.create(createApplicationDto);
   }
 
+  // ***************** findAll App *****************
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('findAllApplications')
-  public async findAll() {
+  public async findAll(@Payload() data: any,
+    @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    channel.ack(orginalMessage);
     return await this.applicationsService.findAll();
   }
 
+  // ***************** findOne App *****************
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('findOneApplication')
-  public async findOne(@Payload() id: number) {
+  public async findOne(@Payload() id: number,
+    @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    channel.ack(orginalMessage);
     return await this.applicationsService.findOne(id);
   }
 
+  // ***************** update App *****************
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('updateApplication')
-  public async update(@Payload() updateApplicationDto: UpdateApplicationDto) {
+  public async update(@Payload() updateApplicationDto: UpdateApplicationDto,
+    @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    channel.ack(orginalMessage);
     return await this.applicationsService.update(updateApplicationDto);
   }
 
+  // ***************** DELETE App *****************
   @UseFilters(new AllExceptionsFilter())
   @MessagePattern('removeApplication')
-  public async remove(@Payload() _id: string) {
+  public async remove(@Payload() _id: string,
+    @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    channel.ack(orginalMessage);
     return await this.applicationsService.remove(_id);
   }
 
@@ -48,24 +73,22 @@ export class ApplicationsController {
   ) {
     const channel = context.getChannelRef();
     const orginalMessage = context.getMessage();
-    console.log('data', data);
     channel.ack(orginalMessage);
     return await this.applicationsService.updatepush(data._id, data._idRole);
   }
 
-    // ***************** Affect Role To App *****************
-    @UseFilters(new AllExceptionsFilter())
-    @MessagePattern('app-DeleteRoleFromApp')
-    public async updatepull(
-      @Payload() data: any,
-      @Ctx() context: RmqContext
-    ) {
-      const channel = context.getChannelRef();
-      const orginalMessage = context.getMessage();
-      console.log('data', data);
-      channel.ack(orginalMessage);
-      return await this.applicationsService.updatepull(data._id, data._idRole);
-    }
+  // ***************** Affect Role To App *****************
+  @UseFilters(new AllExceptionsFilter())
+  @MessagePattern('app-DeleteRoleFromApp')
+  public async updatepull(
+    @Payload() data: any,
+    @Ctx() context: RmqContext
+  ) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    channel.ack(orginalMessage);
+    return await this.applicationsService.updatepull(data._id, data._idRole);
+  }
 }
 
 

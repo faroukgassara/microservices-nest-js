@@ -60,11 +60,6 @@ export class UsersService {
   // ***************** Sign Up *****************
   async signup(data: CreateUserDto) {
     try {
-      //const checkUser = await this.findOne(data.email);
-
-      //if (checkUser) {
-      //  throw new HttpException('USER_EXISTS', HttpStatus.CONFLICT);
-      //}
 
       const salt = await bcrypt.genSalt();
       const hashPassword = await bcrypt.hash(data.password, salt);

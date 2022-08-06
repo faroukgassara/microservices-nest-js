@@ -10,7 +10,7 @@ import { AppService } from './app.service';
 export class AppController {
   constructor(private readonly appService: AppService) {}
   
-  // ***************** Sign In *****************
+  // ***************** Sign In With One Of The Applications*****************
   @MessagePattern('sign-in')
   public async signin(
     @Payload() data: any,
@@ -18,7 +18,6 @@ export class AppController {
   ) {
     const channel = context.getChannelRef();
     const orginalMessage = context.getMessage();
-    console.log('data', data);
     channel.ack(orginalMessage);
     return this.appService.signin(data);
   }
