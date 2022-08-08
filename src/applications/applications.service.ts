@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import mongoose, { Model } from 'mongoose';
+import { AffectationService } from 'src/affectation/affectation.service';
 import { Applications, ApplicationsDocument } from 'src/schemas/applications.schema';
 import { CreateApplicationDto } from './dto/create-application.dto';
 import { UpdateApplicationDto } from './dto/update-application.dto';
@@ -8,7 +9,7 @@ import { UpdateApplicationDto } from './dto/update-application.dto';
 @Injectable()
 export class ApplicationsService {
 
-  constructor(@InjectModel(Applications.name) private applicatioModel: Model<ApplicationsDocument>) { }
+  constructor(private affectationService: AffectationService,@InjectModel(Applications.name) private applicatioModel: Model<ApplicationsDocument>) { }
 
   // ***************** create App *****************
   async create(createApplicationDto: CreateApplicationDto) {
@@ -33,6 +34,13 @@ export class ApplicationsService {
 
   // ***************** DELETE App *****************
   async remove(_id: string) {
+    const i = await this.affectationService.findByApp(_id);
+    if(i.length>0){
+      for (let j of i) {
+        this.affectationService.remove(j._id); 
+        console.log(j._id);
+      }
+    }
     return await this.applicatioModel.deleteOne({ _id });
   }
 

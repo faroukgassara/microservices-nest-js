@@ -58,4 +58,11 @@ export class AffectationService {
   async remove(id: number) {
     return await this.affectationModel.deleteOne({ id });
   }
+
+  // ***************** FIND AFFECTATION BY APPLICATION ID *****************
+  async findByApp(application: any) {
+    return await this.affectationModel.find({
+      "applications": application
+    })
+  }
 }

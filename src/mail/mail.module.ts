@@ -11,8 +11,8 @@ import { join } from 'path';
         host: 'smtp.gmail.com',
         secure: false,
         auth: {
-          user: 'faroukgasaraa@gmail.com',
-          pass: 'mtpsxmjvsilihkzv',
+          user: 'iphonefarouk1998@gmail.com',
+          pass: 'ckwpsxqngiujjmvf',
         },
       },
       defaults: {

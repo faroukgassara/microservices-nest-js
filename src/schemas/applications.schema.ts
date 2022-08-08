@@ -15,7 +15,7 @@ export class Applications {
   @Prop()
   isDeleted: boolean;
 
-  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: Roles.name })
+  @Prop({ type: [mongoose.Schema.Types.ObjectId], ref: Roles.name ,unique:true})
   roles:[mongoose.Schema.Types.ObjectId];
 }
 
