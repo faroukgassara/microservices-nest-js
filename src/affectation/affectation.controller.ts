@@ -61,4 +61,13 @@ export class AffectationController {
     channel.ack(orginalMessage);
     return this.affectationService.findByUserEmail(email);
   }
+
+  @MessagePattern('findByUserID')
+  findByUserID(@Payload() _id: string,
+  @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const orginalMessage = context.getMessage();
+    channel.ack(orginalMessage);
+    return this.affectationService.findByUserID(_id);
+  }
 }

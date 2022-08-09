@@ -65,4 +65,11 @@ export class AffectationService {
       "applications": application
     })
   }
+
+    // ***************** Find Affectation By User id *****************
+    async findByUserID(_id: string) {
+      return await this.affectationModel.find({
+        "users._id": _id
+      }).populate("applications")
+    }
 }
