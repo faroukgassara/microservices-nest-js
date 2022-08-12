@@ -7,10 +7,11 @@ import { User, UserSchema } from 'src/schemas/user.schema';
 import { MailService } from 'src/mail/mail.service';
 import { UsersService } from 'src/users/users.service';
 import { ConfirmAccount, ConfirmAccountSchema } from 'src/schemas/confirmaccount.schema';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: ConfirmAccount.name, schema: ConfirmAccountSchema }]),MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),MongooseModule.forFeature([{ name: ForgotPassword.name, schema: ForgotPasswordSchema }])],
   controllers: [ForgotpasswordController],
-  providers: [UsersService,ForgotpasswordService,MailService]
+  providers: [ConfigService,UsersService,ForgotpasswordService,MailService]
 })
 export class ForgotpasswordModule {}

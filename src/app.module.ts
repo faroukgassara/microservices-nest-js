@@ -18,9 +18,9 @@ import { AffectationService } from './affectation/affectation.service';
 import { Affectation, AffectationSchema } from './schemas/affectation.schema';
 import { ApplicationsService } from './applications/applications.service';
 import { Applications, ApplicationsSchema } from './schemas/applications.schema';
-
+import { ConfigModule } from '@nestjs/config';
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Applications.name, schema: ApplicationsSchema }]),UsersModule,MongooseModule.forRoot('mongodb://localhost/micro'),MongooseModule.forFeature([{ name: Affectation.name, schema: AffectationSchema }]),MongooseModule.forFeature([{ name: ConfirmAccount.name, schema: ConfirmAccountSchema }]),ForgotpasswordModule, MailModule, ApplicationsModule, RolesModule, AffectationModule],
+  imports: [ConfigModule.forRoot({ isGlobal: true}),MongooseModule.forFeature([{ name: Applications.name, schema: ApplicationsSchema }]),UsersModule,MongooseModule.forRoot('mongodb://localhost/micro'),MongooseModule.forFeature([{ name: Affectation.name, schema: AffectationSchema }]),MongooseModule.forFeature([{ name: ConfirmAccount.name, schema: ConfirmAccountSchema }]),ForgotpasswordModule, MailModule, ApplicationsModule, RolesModule, AffectationModule],
   controllers: [AppController],
   providers: [AppService,AffectationModule,AffectationService,ApplicationsService,ApplicationsModule
   ]

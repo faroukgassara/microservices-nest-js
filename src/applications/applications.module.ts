@@ -11,10 +11,11 @@ import { Affectation, AffectationSchema } from 'src/schemas/affectation.schema';
 import { MailService } from 'src/mail/mail.service';
 import { ConfirmAccount, ConfirmAccountSchema } from 'src/schemas/confirmaccount.schema';
 import { User, UserSchema } from 'src/schemas/user.schema';
+import { ConfigService } from '@nestjs/config';
 
 @Module({
   imports : [MongooseModule.forFeature([{ name: ConfirmAccount.name, schema: ConfirmAccountSchema }]), MongooseModule.forFeature([{ name: Applications.name, schema: ApplicationsSchema }]),MongooseModule.forFeature([{ name: Affectation.name, schema: AffectationSchema }]),MongooseModule.forFeature([{ name: User.name, schema: UserSchema }])],
   controllers: [ApplicationsController],
-  providers: [ApplicationsService,AffectationModule,UsersModule,AffectationService,UsersService,MailService]
+  providers: [ConfigService,ApplicationsService,AffectationModule,UsersModule,AffectationService,UsersService,MailService]
 })
 export class ApplicationsModule {}

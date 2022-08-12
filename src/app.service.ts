@@ -22,7 +22,6 @@ export class AppService {
     const application = await this.applicationsservice.findOne(data.application);
 
     const aff = await this.affectationService.findByUserApp(data.email,application);
-    console.log(aff);
 
     const user = await this.usersService.findOne(data.email);
 

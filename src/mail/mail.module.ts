@@ -3,7 +3,8 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
 import { Module } from '@nestjs/common';
 import { MailService } from './mail.service';
 import { join } from 'path';
-
+import { ConfigService } from '@nestjs/config';
+require('dotenv').config();
 @Module({
   imports: [
     MailerModule.forRoot({
@@ -11,8 +12,8 @@ import { join } from 'path';
         host: 'smtp.gmail.com',
         secure: false,
         auth: {
-          user: 'iphonefarouk1998@gmail.com',
-          pass: 'ckwpsxqngiujjmvf',
+          user: process.env.SUPERADMIN_EMAIL,
+          pass: process.env.SUPERADMIN_PASSWORD,
         },
       },
       defaults: {
@@ -28,7 +29,7 @@ import { join } from 'path';
      
     }),
   ],
-  providers: [MailService],
+  providers: [MailService,ConfigService],
   exports: [MailService],
 })
 export class MailModule {}
